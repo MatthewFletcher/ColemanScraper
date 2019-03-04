@@ -3,7 +3,7 @@
 
 
 
-python3 .getlinks.py > links
+python3 linkscraper.py > links
 
 baseURL="http://www.cs.uah.edu/~rcoleman/CS307/TodaysClass/"
 
