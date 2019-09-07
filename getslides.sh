@@ -10,7 +10,7 @@ pyextra="/TodaysClass/TodaysClass.html"
 
 PS3='Enter your choice of class >> '
 
-options=("CS221" "CS307")
+options=("CS221" "CS307" "CS499")
 select opt in "${options[@]}"
 do
   case $opt in
@@ -24,10 +24,15 @@ do
       class='CS307'
       break
       ;;
+    "CS499")
+      echo "CS499 chosen" 
+      class='CS499'
+      break
+      ;;
   esac
 done
 
-class="CS307"
+echo $class  chosen class
 
 pyURL=$baseURL$class$pyextra
 
@@ -39,15 +44,18 @@ python3 linkscraper.py $pyURL > links
 #exit 0
 
 n=1
+cd $class
 while read line; do
   fullURL=$baseURL$class$extra$line
-  curl --silent -O $fullURL
-  #echo $fullURL
-  #n=$((n+1))
-done < links
+  wget "$fullURL" 
+  echo $fullURL
+  n=$((n+1))
+done < ../links
 
+#Rename files to eliminate spaces
+find -name "* *" -type f | rename 's/ /_/g'
 
-convert $(ls *.jpg) slides.pdf 2>/dev/null
+convert $(ls *.jpg) $class.`date +%m-%d`.slides.pdf
 
-rm links
-rm *.jpg
+#rm links
+#rm *.jpg
